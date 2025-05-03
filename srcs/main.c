@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 18:30:05 by dario             #+#    #+#             */
-/*   Updated: 2025/05/03 21:42:40 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/04 00:17:00 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,16 @@
 
 int	main(int argc, char **argv)
 {
+	t_table	table;
 	if (argc == 5 || argc == 6)
 	{
-		
+		check_args(argv);
+		init_table(argv, &table);
 	}
 	else
 		error_exit("Execute like this:\n"
 			"./philo <philo_num> <time_to_die> <time_to_eat>"
 			" <time_to_sleep> <[meals_num]>");
-	printf("Hola :3\n");
+	print_table(&table);
 	return (0);
 }
