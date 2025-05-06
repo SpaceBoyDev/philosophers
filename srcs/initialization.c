@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:29:22 by dario             #+#    #+#             */
-/*   Updated: 2025/05/04 00:22:37 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/06 19:17:41 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,25 @@
 void	check_args(char **args)
 {
 	int	i;
+	int	atol;
 
 	i = 1;
 	while (args[i])
 	{
-		if (ft_atol(args[i]) > INT_MAX || ft_atol(args[i]) < INT_MIN)
+		atol = ft_atol(args[i]);
+		if (atol > INT_MAX || atol < INT_MIN)
 			error_exit("Argument is outside int limits!");
+		if (atol < 1 && i == 1)
+			error_exit("Numbers of philos must be 1 or more");
+		if (atol < 0)
+			error_exit("Arguments cannot be below 0");
 		++i;
 	}
 }
 
 void	init_table(char **args, t_table *table)
 {
+	table->end_sim = false;
 	table->philo_num = ft_atol(args[1]);
 	table->time_to_die = ft_atol(args[2]);
 	table->time_to_eat = ft_atol(args[3]);
@@ -48,4 +55,28 @@ void	init_table(char **args, t_table *table)
 		table->meals_num = ft_atol(args[5]);
 	else
 		table->meals_num = -1;
+}
+
+void	init_data(t_table *table)
+{
+	t_philo	*philo;
+	int		i;
+
+	philo = table->philos;
+	i = -1;
+	table->forks = ft_malloc(sizeof(t_fork) * table->philo_num);
+	while (++i < table->philo_num)
+		table->forks[i].fork_id = i;
+	philo = ft_malloc(sizeof(t_philo) * table->philo_num);
+	i = -1;
+	while (++i < table->philo_num)
+	{
+		philo = table->philos + i;
+		philo->id = i + 1;
+		philo->full = false;
+		philo->meals_counter = 0;
+		philo->table = table;
+		philo->r_fork = &table->forks[i];
+		philo->l_fork = &table->forks[(i + 1) % table->philo_num];
+	}
 }

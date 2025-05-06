@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:44:46 by dario             #+#    #+#             */
-/*   Updated: 2025/05/03 23:46:47 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/05 18:01:29 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,14 @@ long	ft_atol(const char *str)
 		++str;
 	}
 	return (num * negative);
+}
+
+void	*ft_malloc(size_t bytes)
+{
+	void	*result;
+
+	result= malloc(sizeof(void) * bytes);
+	if (!result)
+		error_exit("Error in malloc");
+	return (result);
 }

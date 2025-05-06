@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:38:42 by dario             #+#    #+#             */
-/*   Updated: 2025/05/04 00:16:27 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/06 19:13:00 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 # include <pthread.h>
 # include <sys/time.h>
+# include <errno.h>
 
 # define RST	"\033[0m"
 # define RED	"\033[1;31m"
@@ -30,6 +31,17 @@
 
 typedef pthread_mutex_t	t_mtx;
 typedef struct s_table	t_table;
+
+typedef enum e_opcode
+{
+	LOCK,
+	UNLOCK,
+	INIT,
+	DESTROY,
+	CREATE,
+	JOIN,
+	DETACH
+}			t_opcode;
 
 typedef struct s_fork
 {
@@ -77,14 +89,18 @@ typedef struct s_table
 // Initialization
 void	check_args(char **args);
 void	init_table(char **args, t_table *table);
+void	init_data(t_table *table);
 
 // Utils
 long	ft_atol(const char *str);
+void	*ft_malloc(size_t bytes);
 
 // Handle Errors
 void	error_exit(const char *error_message);
 
 // DEBUG
 void	print_table(t_table *table);
+void	print_philos(t_table *table);
+void	print_forks(t_table *table);
 
 #endif

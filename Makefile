@@ -6,20 +6,21 @@
 #    By: dario <dario@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/01 18:40:53 by dario             #+#    #+#              #
-#    Updated: 2025/05/04 00:15:43 by dario            ###   ########.fr        #
+#    Updated: 2025/05/06 20:03:11 by dario            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	philo
 
 CC			=	cc
-CFLAGS		=	-Wall -Wextra #-Werror -g3
+CFLAGS		=	-Wall -Wextra -g3 #-Werror
 RM			=	rm -f
 
 DIR			=	srcs/
 HDERS		=	$(DIR)philosophers.h
 # SRCS		=	$(DIR)main.c $(DIR)philosophers.c $(DIR)utils.c
 SRC			=	main.c philosophers.c utils.c handle_errors.c initialization.c \
+				handle_mutex.c handle_threads.c \
 				debug.c
 SRCS		=	$(addprefix $(DIR), $(SRC))
 OBJS		=	$(SRCS:.c=.o)
@@ -33,8 +34,8 @@ CIAN		=	\e[7;36m
 
 all: $(NAME)
 
-run: all
-	./philo 10 10 10 10 10
+run: all clean
+	./philo 5 160 60 70 5
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
