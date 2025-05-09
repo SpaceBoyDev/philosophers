@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 00:07:14 by dario             #+#    #+#             */
-/*   Updated: 2025/05/06 19:19:05 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/09 12:28:46 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	print_table(t_table *table)
 	printf("║ time_to_eat   ║\t%ld ms\t     ║\n", table->time_to_eat);
 	printf("║ time_to_sleep ║\t%ld ms\t     ║\n", table->time_to_sleep);
 	printf("║ meals_num     ║\t%ld\t     ║\n", table->meals_num);
+	printf("║ sim_start     ║\t%ld\t     ║\n", table->sim_start);
 	printf("╚═══════════════╩════════════════════╝\n");
 }
 
