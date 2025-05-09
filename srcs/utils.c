@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:44:46 by dario             #+#    #+#             */
-/*   Updated: 2025/05/05 18:01:29 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/09 14:22:29 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,36 @@ void	*ft_malloc(size_t bytes)
 {
 	void	*result;
 
-	result= malloc(sizeof(void) * bytes);
+	result = malloc(sizeof(void) * bytes);
 	if (!result)
 		error_exit("Error in malloc");
 	return (result);
+}
+
+long	get_current_time(void)
+{
+	struct timeval	time;
+
+	if (gettimeofday(&time, NULL) == -1)
+		error_exit("Error getting current time");
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+void	print_status(t_philo *philo, t_philo_status status)
+{
+	long	time;
+
+	time = get_current_time() - philo->table->sim_start;
+	if (status == TAKEN)
+		printf("%li %i has taken a fork", time, philo->id);
+	else if (status == EATING)
+		printf("%li %i is eating", time, philo->id);
+	else if (status == SLEEPING)
+		printf("%li %i is sleeping", time, philo->id);
+	else if (status == THINKING)
+		printf("%li %i is thiking", time, philo->id);
+	else if (status == DEAD)
+		printf("%li %i died", time, philo->id);
+	else
+		error_exit("Error when printing status");
 }

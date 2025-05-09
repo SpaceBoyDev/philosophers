@@ -6,7 +6,7 @@
 #    By: dario <dario@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/01 18:40:53 by dario             #+#    #+#              #
-#    Updated: 2025/05/06 20:03:11 by dario            ###   ########.fr        #
+#    Updated: 2025/05/09 11:24:24 by dario            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,6 @@ RM			=	rm -f
 
 DIR			=	srcs/
 HDERS		=	$(DIR)philosophers.h
-# SRCS		=	$(DIR)main.c $(DIR)philosophers.c $(DIR)utils.c
 SRC			=	main.c philosophers.c utils.c handle_errors.c initialization.c \
 				handle_mutex.c handle_threads.c \
 				debug.c
@@ -35,7 +34,7 @@ CIAN		=	\e[7;36m
 all: $(NAME)
 
 run: all clean
-	./philo 5 160 60 70 5
+	./philo 5 800 200 20 5
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
@@ -66,7 +65,7 @@ norme:
 			echo "$(RESET)"; \
 		fi \
 	done
-	@echo "$(CIAN)\nHEADERS$(RESET)"
+	@echo "$(CIAN)HEADERS$(RESET)"
 	@for header in $(HDERS); do \
 		norminette $$header | grep "OK!" > /dev/null; \
 		if [ $$? -eq 0 ]; then \

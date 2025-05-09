@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:29:22 by dario             #+#    #+#             */
-/*   Updated: 2025/05/06 19:17:41 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/09 14:26:49 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	check_args(char **args)
 
 void	init_table(char **args, t_table *table)
 {
+	table->sim_start = get_current_time();
 	table->end_sim = false;
 	table->philo_num = ft_atol(args[1]);
 	table->time_to_die = ft_atol(args[2]);
@@ -66,7 +67,10 @@ void	init_data(t_table *table)
 	i = -1;
 	table->forks = ft_malloc(sizeof(t_fork) * table->philo_num);
 	while (++i < table->philo_num)
+	{
 		table->forks[i].fork_id = i;
+		safe_mutex_handle(&(table->forks[i].fork), INIT);
+	}
 	philo = ft_malloc(sizeof(t_philo) * table->philo_num);
 	i = -1;
 	while (++i < table->philo_num)

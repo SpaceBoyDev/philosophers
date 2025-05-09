@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:38:42 by dario             #+#    #+#             */
-/*   Updated: 2025/05/06 19:13:00 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/09 14:21:57 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,15 @@
 
 typedef pthread_mutex_t	t_mtx;
 typedef struct s_table	t_table;
+
+typedef enum e_philo_status
+{
+	TAKEN,
+	EATING,
+	SLEEPING,
+	THINKING,
+	DEAD
+}			t_philo_status;
 
 typedef enum e_opcode
 {
@@ -91,9 +100,18 @@ void	check_args(char **args);
 void	init_table(char **args, t_table *table);
 void	init_data(t_table *table);
 
+// Handle Mutex
+void	safe_mutex_handle(t_mtx *mutex, t_opcode opcode);
+
+// Handle Threads
+void	safe_thread_handle(pthread_t *thread, void *(func)(void *),
+			void *data, t_opcode opcode);
+
 // Utils
 long	ft_atol(const char *str);
 void	*ft_malloc(size_t bytes);
+long	get_current_time(void);
+void	print_status(t_philo *philo, t_philo_status status);
 
 // Handle Errors
 void	error_exit(const char *error_message);

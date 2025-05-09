@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 18:30:05 by dario             #+#    #+#             */
-/*   Updated: 2025/05/06 19:17:33 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/09 11:15:47 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	main(int argc, char **argv)
 		error_exit("Execute like this:\n"
 			"./philo <philo_num> <time_to_die> <time_to_eat>"
 			" <time_to_sleep> <[meals_num]>");
-
 	print_table(&table);
 	print_philos(&table);
 	//print_forks(&table);

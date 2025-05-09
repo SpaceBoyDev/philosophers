@@ -6,13 +6,13 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:48:49 by dario             #+#    #+#             */
-/*   Updated: 2025/05/06 23:13:29 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/09 11:08:06 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static void handle_thread_error(int status, t_opcode opcode)
+static void	handle_thread_error(int status, t_opcode opcode)
 {
 	if (status == 0)
 		return ;
