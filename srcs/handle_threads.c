@@ -6,13 +6,13 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:48:49 by dario             #+#    #+#             */
-/*   Updated: 2025/05/09 11:08:06 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/15 20:52:44 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static void	handle_thread_error(int status, t_opcode opcode)
+static void	handle_thread_error(int status, t_threadop opcode)
 {
 	if (status == 0)
 		return ;
@@ -32,7 +32,7 @@ static void	handle_thread_error(int status, t_opcode opcode)
 }
 
 void	safe_thread_handle(pthread_t *thread, void *(func)(void *),
-		void *data, t_opcode opcode)
+		void *data, t_threadop opcode)
 {
 	if (opcode == CREATE)
 		handle_thread_error(pthread_create(thread, NULL, func, data), opcode);

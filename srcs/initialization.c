@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:29:22 by dario             #+#    #+#             */
-/*   Updated: 2025/05/09 14:26:49 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/15 22:09:07 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ void	check_args(char **args)
 
 void	init_table(char **args, t_table *table)
 {
-	table->sim_start = get_current_time();
+	safe_mutex_handle(&table->write_mtx, INIT);
+	safe_mutex_handle(&table->meal_mtx, INIT);
+	safe_mutex_handle(&table->dead_mtx, INIT);
+	safe_mutex_handle(&table->sim_mtx, INIT);
 	table->end_sim = false;
 	table->philo_num = ft_atol(args[1]);
 	table->time_to_die = ft_atol(args[2]);
@@ -61,6 +64,7 @@ void	init_table(char **args, t_table *table)
 void	init_data(t_table *table)
 {
 	t_philo	*philo;
+	t_fork	*fork;
 	int		i;
 
 	philo = table->philos;
@@ -68,10 +72,11 @@ void	init_data(t_table *table)
 	table->forks = ft_malloc(sizeof(t_fork) * table->philo_num);
 	while (++i < table->philo_num)
 	{
-		table->forks[i].fork_id = i;
-		safe_mutex_handle(&(table->forks[i].fork), INIT);
+		fork = table->forks + i;
+		fork->fork_id = i;
+		safe_mutex_handle(&fork->fork, INIT);
 	}
-	philo = ft_malloc(sizeof(t_philo) * table->philo_num);
+	table->philos = ft_malloc(sizeof(t_philo) * table->philo_num);
 	i = -1;
 	while (++i < table->philo_num)
 	{
@@ -83,4 +88,23 @@ void	init_data(t_table *table)
 		philo->r_fork = &table->forks[i];
 		philo->l_fork = &table->forks[(i + 1) % table->philo_num];
 	}
+}
+
+void	create_threads(t_table *table)
+{
+	int		i;
+	t_philo *philo;
+
+	safe_mutex_handle(&table->sim_mtx, LOCK);
+	i = -1;
+	while (++i < table->philo_num)
+	{
+		philo = table->philos + i;
+		safe_thread_handle(&philo->thread_id,
+			&philo_routine, (void *)philo, CREATE);
+	}
+	philo->table->sim_start = get_current_time();
+	safe_mutex_handle(&table->sim_mtx, UNLOCK);
+	if (philo->table->philo_num > 1)
+		anyone_died(philo); //TODO: Implement func
 }

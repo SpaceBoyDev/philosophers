@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 00:07:14 by dario             #+#    #+#             */
-/*   Updated: 2025/05/09 12:28:46 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/13 18:31:06 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,14 @@ void	print_table(t_table *table)
 	printf("║ time_to_eat   ║\t%ld ms\t     ║\n", table->time_to_eat);
 	printf("║ time_to_sleep ║\t%ld ms\t     ║\n", table->time_to_sleep);
 	printf("║ meals_num     ║\t%ld\t     ║\n", table->meals_num);
-	printf("║ sim_start     ║\t%ld\t     ║\n", table->sim_start);
+	printf("║ sim_start     ║\t%ld║\n", table->sim_start);
 	printf("╚═══════════════╩════════════════════╝\n");
 }
 
 void	print_philos(t_table *table)
 {
 	int	i;
+	t_philo	*philo;
 
 	printf("╔═══════════════════════╗\n");
 	printf("║   Philosophers Table  ║\n");
@@ -52,10 +53,11 @@ void	print_philos(t_table *table)
 	printf("╠═══════╬═══════╬═══════╣\n");
 	for (i = 0; i < table->philo_num; i++)
 	{
+		philo = table->philos + i;
 		printf("║ %i\t║ %i\t║ %i\t║\n", 
-			table->philos[i].id, 
-			table->philos[i].l_fork->fork_id, 
-			table->philos[i].r_fork->fork_id);
+			philo->id, 
+			philo->l_fork->fork_id, 
+			philo->r_fork->fork_id);
 	}
 	printf("╚═══════╩═══════╩═══════╝\n");
 }
@@ -63,6 +65,7 @@ void	print_philos(t_table *table)
 void	print_forks(t_table *table)
 {
 	int	i;
+	t_fork	*fork;
 
 	printf("╔═══════════════╗\n");
 	printf("║     Forks     ║\n");
@@ -71,7 +74,8 @@ void	print_forks(t_table *table)
 	printf("╠═══════════════╣\n");
 	for (i = 0; i < table->philo_num; i++)
 	{
-		printf("║\t%i\t║\n", table->forks[i].fork_id);
+		fork = table->forks + i;
+		printf("║\t%i\t║\n", fork->fork_id);
 	}
 	printf("╚═══════════════╝\n");
 }

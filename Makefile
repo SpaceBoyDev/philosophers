@@ -6,7 +6,7 @@
 #    By: dario <dario@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/01 18:40:53 by dario             #+#    #+#              #
-#    Updated: 2025/05/09 11:24:24 by dario            ###   ########.fr        #
+#    Updated: 2025/05/15 20:43:54 by dario            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ RM			=	rm -f
 DIR			=	srcs/
 HDERS		=	$(DIR)philosophers.h
 SRC			=	main.c philosophers.c utils.c handle_errors.c initialization.c \
-				handle_mutex.c handle_threads.c \
+				handle_mutex.c handle_threads.c free_variables.c philo_routines.c\
 				debug.c
 SRCS		=	$(addprefix $(DIR), $(SRC))
 OBJS		=	$(SRCS:.c=.o)
@@ -32,6 +32,9 @@ BLUE		=	\033[0;34m
 CIAN		=	\e[7;36m
 
 all: $(NAME)
+
+leaks: all clean
+	valgrind --leak-check=full --track-origins=yes ./philo 5 800 200 20 5
 
 run: all clean
 	./philo 5 800 200 20 5

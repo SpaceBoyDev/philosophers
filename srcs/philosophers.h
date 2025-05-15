@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:38:42 by dario             #+#    #+#             */
-/*   Updated: 2025/05/09 14:21:57 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/15 21:53:56 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # define GREEN	"\033[1;32m"
 # define YELLOW	"\033[1;33m"
 
+# define PHILO_MAX 200
+
 typedef pthread_mutex_t	t_mtx;
 typedef struct s_table	t_table;
 
@@ -41,16 +43,20 @@ typedef enum e_philo_status
 	DEAD
 }			t_philo_status;
 
-typedef enum e_opcode
+typedef enum e_mtxop
 {
+	INIT,
 	LOCK,
 	UNLOCK,
-	INIT,
-	DESTROY,
+	DESTROY
+}			t_mtxop;
+
+typedef enum e_threadop
+{
 	CREATE,
 	JOIN,
 	DETACH
-}			t_opcode;
+}			t_threadop;
 
 typedef struct s_fork
 {
@@ -93,25 +99,36 @@ typedef struct s_table
 	bool	end_sim;
 	t_fork	*forks;
 	t_philo	*philos;
+	t_mtx	write_mtx;
+	t_mtx	meal_mtx;
+	t_mtx	dead_mtx;
+	t_mtx	sim_mtx;
 }				t_table;
 
 // Initialization
 void	check_args(char **args);
 void	init_table(char **args, t_table *table);
 void	init_data(t_table *table);
+void	create_threads(t_table *table);
 
 // Handle Mutex
-void	safe_mutex_handle(t_mtx *mutex, t_opcode opcode);
+void	safe_mutex_handle(t_mtx *mutex, t_mtxop opcode);
 
 // Handle Threads
 void	safe_thread_handle(pthread_t *thread, void *(func)(void *),
-			void *data, t_opcode opcode);
+			void *data, t_threadop opcode);
+
+// Philo Routines
+void	*philo_routine(void *param);
 
 // Utils
 long	ft_atol(const char *str);
 void	*ft_malloc(size_t bytes);
 long	get_current_time(void);
 void	print_status(t_philo *philo, t_philo_status status);
+
+// Free Variables
+void	free_all_structs(t_table *table);
 
 // Handle Errors
 void	error_exit(const char *error_message);

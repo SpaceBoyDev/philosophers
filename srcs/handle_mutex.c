@@ -6,13 +6,13 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 18:05:38 by dario             #+#    #+#             */
-/*   Updated: 2025/05/09 11:08:58 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/15 20:52:19 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static void	handle_mutex_error(int status, t_opcode opcode)
+static void	handle_mutex_error(int status, t_mtxop opcode)
 {
 	if (status == 0)
 		return ;
@@ -32,7 +32,7 @@ static void	handle_mutex_error(int status, t_opcode opcode)
 		error_exit("Mutex is locked");
 }
 
-void	safe_mutex_handle(t_mtx *mutex, t_opcode opcode)
+void	safe_mutex_handle(t_mtx *mutex, t_mtxop opcode)
 {
 	if (opcode == LOCK)
 		handle_mutex_error(pthread_mutex_lock(mutex), opcode);
