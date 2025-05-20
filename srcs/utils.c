@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:44:46 by dario             #+#    #+#             */
-/*   Updated: 2025/05/12 18:53:02 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/19 20:47:06 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,19 @@ long	get_current_time(void)
 	if (gettimeofday(&time, NULL) == -1)
 		error_exit("Error getting current time");
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+void	ft_usleep(t_philo *philo, size_t time_to_usleep)
+{
+	size_t	wake_up;
+
+	wake_up = get_time() + time_to_usleep;
+	while (get_time() < wake_up)
+	{
+		if (!simulation_continues(philo))
+			break ;
+		usleep(50);
+	}
 }
 
 void	print_status(t_philo *philo, t_philo_status status)

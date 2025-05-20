@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 18:30:05 by dario             #+#    #+#             */
-/*   Updated: 2025/05/15 20:29:49 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/19 20:39:18 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,19 @@ int	main(int argc, char **argv)
 {
 	t_table	table;
 
-	if (argc == 5 || argc == 6)
-	{
-		check_args(argv);
-		init_table(argv, &table);
-		init_data(&table);
-
-		// DEBUG PRINT
-		print_table(&table);
-		print_philos(&table);
-		print_forks(&table);
-		//free_all_structs(&table);
-	}
-	else
+	if (argc != 5 && argc != 6)
 		error_exit("Execute like this:\n"
 			"./philo <philo_num> <time_to_die> <time_to_eat>"
 			" <time_to_sleep> <[meals_num]>");
-	// usleep(90000);
-	//free(&philos);
+	check_args(argv);
+	init_table(argv, &table);
+	init_data(&table);
+	create_threads(&table);
+
+	/* DEBUG PRINT
+	print_table(&table);
+	print_philos(&table);
+	print_forks(&table);
+	*/
 	return (0);
 }

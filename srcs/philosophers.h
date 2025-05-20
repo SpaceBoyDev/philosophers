@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:38:42 by dario             #+#    #+#             */
-/*   Updated: 2025/05/15 21:53:56 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/19 20:47:15 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ long	ft_atol(const char *str);
 void	*ft_malloc(size_t bytes);
 long	get_current_time(void);
 void	print_status(t_philo *philo, t_philo_status status);
+void	ft_usleep(t_philo *philo, size_t time_to_usleep);
 
 // Free Variables
 void	free_all_structs(t_table *table);
