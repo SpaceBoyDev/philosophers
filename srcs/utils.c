@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:44:46 by dario             #+#    #+#             */
-/*   Updated: 2025/05/19 20:47:06 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/20 19:37:47 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,6 @@ long	ft_atol(const char *str)
 	return (num * negative);
 }
 
-void	*ft_malloc(size_t bytes)
-{
-	void	*result;
-
-	result = malloc(sizeof(void) * bytes);
-	if (!result)
-		error_exit("Error in malloc");
-	return (result);
-}
-
 long	get_current_time(void)
 {
 	struct timeval	time;
@@ -66,34 +56,4 @@ long	get_current_time(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-void	ft_usleep(t_philo *philo, size_t time_to_usleep)
-{
-	size_t	wake_up;
 
-	wake_up = get_time() + time_to_usleep;
-	while (get_time() < wake_up)
-	{
-		if (!simulation_continues(philo))
-			break ;
-		usleep(50);
-	}
-}
-
-void	print_status(t_philo *philo, t_philo_status status)
-{
-	long	time;
-
-	time = get_current_time() - philo->table->sim_start;
-	if (status == TAKEN)
-		printf("%li %i has taken a fork\n", time, philo->id);
-	else if (status == EATING)
-		printf("%li %i is eating\n", time, philo->id);
-	else if (status == SLEEPING)
-		printf("%li %i is sleeping\n", time, philo->id);
-	else if (status == THINKING)
-		printf("%li %i is thiking\n", time, philo->id);
-	else if (status == DEAD)
-		printf("%li %i died\n", time, philo->id);
-	else
-		error_exit("Error when printing status");
-}

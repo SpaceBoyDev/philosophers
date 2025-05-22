@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 00:07:14 by dario             #+#    #+#             */
-/*   Updated: 2025/05/13 18:31:06 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/22 19:22:34 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,39 +27,41 @@
 
 void	print_table(t_table *table)
 {
-	printf("╔════════════════════════════════════╗\n");
-	printf("║         Philosopher Table          ║\n");
-	printf("╠═══════════════╦════════════════════╣\n");
-	printf("║  Attribute    ║       Value        ║\n");
-	printf("╠═══════════════╬════════════════════╣\n");
-	printf("║ philo_num     ║\t%ld\t     ║\n", table->philo_num);
-	printf("║ time_to_die   ║\t%ld ms\t     ║\n", table->time_to_die);
-	printf("║ time_to_eat   ║\t%ld ms\t     ║\n", table->time_to_eat);
-	printf("║ time_to_sleep ║\t%ld ms\t     ║\n", table->time_to_sleep);
-	printf("║ meals_num     ║\t%ld\t     ║\n", table->meals_num);
-	printf("║ sim_start     ║\t%ld║\n", table->sim_start);
-	printf("╚═══════════════╩════════════════════╝\n");
+	printf("╔═══════════════════════════════╗\n");
+	printf("║            Table\t\t║\n");
+	printf("╠═══════════════╦═══════════════╣\n");
+	printf("║  Attribute    ║     Value\t║\n");
+	printf("╠═══════════════╬═══════════════╣\n");
+	printf("║ philo_num     ║  %ld\t\t║\n", table->philo_num);
+	printf("║ time_to_die   ║  %ld qs\t║\n", table->time_to_die);
+	printf("║ time_to_eat   ║  %ld qs\t║\n", table->time_to_eat);
+	printf("║ time_to_sleep ║  %ld qs\t║\n", table->time_to_sleep);
+	printf("║ meals_num     ║  %ld\t\t║\n", table->meals_num);
+	printf("║ sim_start     ║  %ld║\n", table->sim_start);
+	printf("╚═══════════════╩═══════════════╝\n");
 }
 
 void	print_philos(t_table *table)
 {
 	int	i;
+
 	t_philo	*philo;
 
-	printf("╔═══════════════════════╗\n");
-	printf("║   Philosophers Table  ║\n");
-	printf("╠═══════╦═══════╦═══════╣\n");
-	printf("║  ID   ║l_fork ║r_fork ║\n");
-	printf("╠═══════╬═══════╬═══════╣\n");
+	philo = table->philos;
+	printf("╔═══════════════════════════════════════╗\n");
+	printf("║         Philosophers Table            ║\n");
+	printf("╠═══════╦═══════╦═══════╦═══════════════╣\n");
+	printf("║  ID   ║l_fork ║r_fork ║   start_time\t║\n");
+	printf("╠═══════╬═══════╬═══════╬═══════════════╣\n");
 	for (i = 0; i < table->philo_num; i++)
 	{
-		philo = table->philos + i;
-		printf("║ %i\t║ %i\t║ %i\t║\n", 
-			philo->id, 
-			philo->l_fork->fork_id, 
-			philo->r_fork->fork_id);
+		printf("║ %i\t║ %i\t║ %i\t║ %ld\t║\n", 
+			philo[i].id, 
+			philo[i].l_fork->fork_id, 
+			philo[i].r_fork->fork_id,
+			philo[i].start_time);
 	}
-	printf("╚═══════╩═══════╩═══════╝\n");
+	printf("╚═══════╩═══════╩═══════╩═══════════════╝\n");
 }
 
 void	print_forks(t_table *table)

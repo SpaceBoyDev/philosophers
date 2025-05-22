@@ -6,7 +6,7 @@
 #    By: dario <dario@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/01 18:40:53 by dario             #+#    #+#              #
-#    Updated: 2025/05/15 20:43:54 by dario            ###   ########.fr        #
+#    Updated: 2025/05/22 19:23:30 by dario            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,11 @@ RM			=	rm -f
 
 DIR			=	srcs/
 HDERS		=	$(DIR)philosophers.h
-SRC			=	main.c philosophers.c utils.c handle_errors.c initialization.c \
-				handle_mutex.c handle_threads.c free_variables.c philo_routines.c\
+SRC			=	main.c initialization.c philo_routines.c monitor_utils.c\
+				utils.c safe_handlers.c safe_functions.c print_status.c \
+				free_variables.c handle_errors.c \
 				debug.c
+
 SRCS		=	$(addprefix $(DIR), $(SRC))
 OBJS		=	$(SRCS:.c=.o)
 

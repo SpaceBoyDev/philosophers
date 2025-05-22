@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:38:42 by dario             #+#    #+#             */
-/*   Updated: 2025/05/19 20:47:15 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/22 19:35:32 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ typedef struct s_philo
 {
 	int			id;
 	long		meals_counter;
-	bool		full;
+	bool		dead;
+	long		start_time;
 	long		last_meal_time;
 	t_fork		*l_fork;
 	t_fork		*r_fork;
@@ -76,18 +77,6 @@ typedef struct s_philo
 	t_table		*table;
 }				t_philo;
 
-/* ./philo 10 			15			 10				20			30
-* philo_num^ time_to_die^ time_to_eat^ time_to_sleep^ meals_num^
-* philo_num: número de philos
-* time_to_die (ms): tiempo que debe pasar entre la última comida y que el
-* 				philo vuelva a empezar a comer para que muera
-* time_to_eat (ms): tiempo que tiene un philo para comer. Tendrá los forks
-*				ocupados durante este tiempo
-* time_to_sleep (ms): tiempo que tiene un philo para dormir
-* meals_num (opcional): cantidad de comidas que deben tener todos los philos
-*				para que la simulación termine. Si no se especifia, la
-*				simulación terminará con la muerte de un philo
-*/
 typedef struct s_table
 {
 	long	philo_num;
@@ -97,39 +86,48 @@ typedef struct s_table
 	long	meals_num;
 	long	sim_start;
 	bool	end_sim;
+	int		satisfied;
 	t_fork	*forks;
 	t_philo	*philos;
 	t_mtx	write_mtx;
 	t_mtx	meal_mtx;
 	t_mtx	dead_mtx;
 	t_mtx	sim_mtx;
+	t_mtx	satisfied_mtx;
 }				t_table;
 
 // Initialization
 void	check_args(char **args);
-void	init_table(char **args, t_table *table);
+void	init_table(char **args, t_table *table,
+			t_philo *philos, t_fork *forks);
 void	init_data(t_table *table);
 void	create_threads(t_table *table);
-
-// Handle Mutex
-void	safe_mutex_handle(t_mtx *mutex, t_mtxop opcode);
-
-// Handle Threads
-void	safe_thread_handle(pthread_t *thread, void *(func)(void *),
-			void *data, t_threadop opcode);
 
 // Philo Routines
 void	*philo_routine(void *param);
 
+// Safe Handlers
+void	safe_mutex_handle(t_mtx *mutex, t_mtxop opcode);
+void	safe_thread_handle(pthread_t *thread, void *(func)(void *),
+			void *data, t_threadop opcode);
+
+// Safe Functions
+void	*safe_malloc(size_t bytes);
+void	safe_usleep(t_philo *philo, size_t time_to_usleep);
+
 // Utils
 long	ft_atol(const char *str);
-void	*ft_malloc(size_t bytes);
 long	get_current_time(void);
+
+// Monitor Utils
+bool	anyone_died(t_philo *philo);
+bool	has_sim_ended(t_table *table);
+
+// Print Status
 void	print_status(t_philo *philo, t_philo_status status);
-void	ft_usleep(t_philo *philo, size_t time_to_usleep);
 
 // Free Variables
-void	free_all_structs(t_table *table);
+void	join_threads(t_table *table);
 
 // Handle Errors
 void	error_exit(const char *error_message);

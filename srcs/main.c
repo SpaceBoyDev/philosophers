@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 18:30:05 by dario             #+#    #+#             */
-/*   Updated: 2025/05/19 20:39:18 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/22 19:36:03 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,24 @@
 int	main(int argc, char **argv)
 {
 	t_table	table;
+	t_philo	philos[PHILO_MAX];
+	t_fork	forks[PHILO_MAX];
 
 	if (argc != 5 && argc != 6)
 		error_exit("Execute like this:\n"
 			"./philo <philo_num> <time_to_die> <time_to_eat>"
 			" <time_to_sleep> <[meals_num]>");
 	check_args(argv);
-	init_table(argv, &table);
+	init_table(argv, &table, philos, forks);
 	init_data(&table);
 	create_threads(&table);
 
-	/* DEBUG PRINT
+	usleep(5000000);
 	print_table(&table);
 	print_philos(&table);
+	/* DEBUG PRINT
 	print_forks(&table);
 	*/
+	join_threads(&table);
 	return (0);
 }
