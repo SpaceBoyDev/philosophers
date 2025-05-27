@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:38:42 by dario             #+#    #+#             */
-/*   Updated: 2025/05/22 19:35:32 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/27 19:14:36 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_philo
 	bool		dead;
 	long		start_time;
 	long		last_meal_time;
+	t_mtx		last_meal_mtx;
 	t_fork		*l_fork;
 	t_fork		*r_fork;
 	pthread_t	thread_id;
@@ -85,15 +86,14 @@ typedef struct s_table
 	long	time_to_sleep;
 	long	meals_num;
 	long	sim_start;
+	t_mtx	sim_start_mtx;
 	bool	end_sim;
+	t_mtx	end_sim_mtx;
 	int		satisfied;
+	t_mtx	satisfied_mtx;
+	t_mtx	print_status_mtx;
 	t_fork	*forks;
 	t_philo	*philos;
-	t_mtx	write_mtx;
-	t_mtx	meal_mtx;
-	t_mtx	dead_mtx;
-	t_mtx	sim_mtx;
-	t_mtx	satisfied_mtx;
 }				t_table;
 
 // Initialization
@@ -121,7 +121,7 @@ long	get_current_time(void);
 
 // Monitor Utils
 bool	anyone_died(t_philo *philo);
-bool	has_sim_ended(t_table *table);
+bool	sim_continues(t_table *table);
 
 // Print Status
 void	print_status(t_philo *philo, t_philo_status status);

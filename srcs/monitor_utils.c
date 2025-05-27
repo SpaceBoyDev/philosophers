@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 19:38:23 by dario             #+#    #+#             */
-/*   Updated: 2025/05/22 18:48:39 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/27 18:39:16 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ bool	anyone_died(t_philo *philo)
 	return (false);
 }
 
-bool	has_sim_ended(t_table *table)
+bool	sim_continues(t_table *table)
 {
 	bool	ret;
-	safe_mutex_handle(&table->sim_mtx, LOCK);
+	safe_mutex_handle(&table->end_sim_mtx, LOCK);
 	ret = table->end_sim;
-	safe_mutex_handle(&table->sim_mtx, UNLOCK);
-	return (ret);
+	safe_mutex_handle(&table->end_sim_mtx, UNLOCK);
+	return (!ret);
 }

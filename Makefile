@@ -6,7 +6,7 @@
 #    By: dario <dario@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/01 18:40:53 by dario             #+#    #+#              #
-#    Updated: 2025/05/22 19:23:30 by dario            ###   ########.fr        #
+#    Updated: 2025/05/27 18:22:17 by dario            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ leaks: all clean
 	valgrind --leak-check=full --track-origins=yes ./philo 5 800 200 20 5
 
 run: all clean
-	./philo 5 800 200 20 5
+	./philo 8 800 200 20 5
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)

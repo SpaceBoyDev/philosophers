@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:29:22 by dario             #+#    #+#             */
-/*   Updated: 2025/05/22 19:34:25 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/27 19:14:51 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,9 @@ void	check_args(char **args)
 
 void	init_table(char **args, t_table *table, t_philo *philos, t_fork *forks)
 {
-	safe_mutex_handle(&table->write_mtx, INIT);
-	safe_mutex_handle(&table->meal_mtx, INIT);
-	safe_mutex_handle(&table->dead_mtx, INIT);
-	safe_mutex_handle(&table->sim_mtx, INIT);
+	safe_mutex_handle(&table->end_sim_mtx, INIT);
+	safe_mutex_handle(&table->sim_start_mtx, INIT);
+	safe_mutex_handle(&table->print_status_mtx, INIT);
 	table->philos = philos;
 	table->forks = forks;
 	table->end_sim = false;
@@ -83,6 +82,7 @@ void	init_data(t_table *table)
 		table->philos[i].r_fork = &table->forks[i];
 		table->philos[i].l_fork = &table->forks[(i + 1) \
 			% table->philo_num];
+		safe_mutex_handle(&table->philos[i].last_meal_mtx, INIT);
 	}
 }
 
@@ -93,7 +93,7 @@ void	create_threads(t_table *table)
 
 	printf(BLUE"Creating threads...\n"RST);
 	philo = table->philos;
-	safe_mutex_handle(&table->sim_mtx, LOCK);
+	safe_mutex_handle(&table->sim_start_mtx, LOCK);
 	i = -1;
 	while (++i < table->philo_num)
 	{
@@ -101,8 +101,7 @@ void	create_threads(t_table *table)
 			&philo_routine, (void *)&philo[i], CREATE);
 	}
 	philo->table->sim_start = get_current_time();
-	safe_mutex_handle(&table->sim_mtx, UNLOCK);
+	safe_mutex_handle(&table->sim_start_mtx, UNLOCK);
 	// if (philo->table->philo_num > 1)
 	// 	anyone_died(philo); //TODO: Implement func
-
 }

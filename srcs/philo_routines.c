@@ -6,34 +6,35 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:30:48 by dario             #+#    #+#             */
-/*   Updated: 2025/05/22 19:16:50 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/27 19:00:35 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-// void	*philo_routine(void *param)
-// {
-// 	t_philo	*philo;
+void	sleep_think_routine(t_philo *philo)
+{
+	print_status(philo, SLEEPING);
+	safe_usleep(philo, philo->table->time_to_sleep);
+	print_status(philo, THINKING);
+}
 
-// 	philo = (t_philo *)param;
-// 	safe_mutex_handle(&philo->table->meal_mtx, LOCK);
-// 	philo->last_meal_time = philo->table->sim_start;
-// 	safe_mutex_handle(&philo->table->meal_mtx, UNLOCK);
-// 	if (philo->table->philo_num == 1)
-// 		return (single_philo_routine(philo)); //TODO: Implement func
-// 	if (philo->id % 2 != 0)
-// 		usleep(100);
-// 	while (simulation_continues(philo)) //TODO: Implement func
-// 	{
-// 		eat_routine(philo); //TODO: Implement func
-// 		if (philo->table->meals_num > 0
-// 			&& philo->meals_counter >= philo->table->meals_num)
-// 		{
-			
-// 		}
-// 	}
-// }
+void	eat_routine(t_philo *philo)
+{
+	safe_mutex_handle(&philo->l_fork->fork, LOCK);
+	print_status(philo, TAKEN);
+	safe_mutex_handle(&philo->r_fork->fork, LOCK);
+	print_status(philo, TAKEN);
+	safe_mutex_handle(&philo->last_meal_mtx, LOCK);
+	philo->last_meal_time = get_current_time();
+	safe_mutex_handle(&philo->last_meal_mtx, UNLOCK);
+	if (sim_continues(philo->table))
+		++philo->meals_counter;
+	print_status(philo, EATING);
+	safe_usleep(philo, philo->table->time_to_eat);
+	safe_mutex_handle(&philo->r_fork->fork, UNLOCK);
+	safe_mutex_handle(&philo->l_fork->fork, UNLOCK);
+}
 
 void	*philo_routine(void *param)
 {
@@ -41,7 +42,25 @@ void	*philo_routine(void *param)
 
 	printf("wakala\n");
 	philo = (t_philo *)param;
-	philo->start_time = get_current_time();
-	//safe_usleep(philo, 5000000000);
+	safe_mutex_handle(&philo->table->sim_start_mtx, LOCK);
+	philo->start_time = philo->table->sim_start;
+	safe_mutex_handle(&philo->table->sim_start_mtx, UNLOCK);
+	if (philo->id % 2 != 0)
+		safe_usleep(philo, 100);
+	while (sim_continues(philo->table))
+	{
+		eat_routine(philo);
+		if (philo->table->meals_num > 0
+			&& philo->meals_counter >= philo->table->meals_num)
+		{
+			safe_mutex_handle(&philo->table->satisfied_mtx, LOCK);
+			++philo->table->satisfied;
+			safe_mutex_handle(&philo->table->satisfied_mtx, UNLOCK);
+			safe_mutex_handle(&philo->l_fork->fork, UNLOCK);
+			safe_mutex_handle(&philo->r_fork->fork, UNLOCK);
+			return (NULL);
+		}
+		sleep_think_routine(philo);
+	}
 	return (NULL);
 }

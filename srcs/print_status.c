@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 21:29:22 by dario             #+#    #+#             */
-/*   Updated: 2025/05/20 21:29:43 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/27 19:15:50 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	print_status(t_philo *philo, t_philo_status status)
 {
 	long	time;
 
-	time = get_current_time() - philo->table->sim_start;
+	time = get_current_time() - philo->start_time;
+	safe_mutex_handle(&philo->table->print_status_mtx, LOCK);
 	if (status == TAKEN)
 		printf("%li %i has taken a fork\n", time, philo->id);
 	else if (status == EATING)
@@ -29,4 +30,5 @@ void	print_status(t_philo *philo, t_philo_status status)
 		printf("%li %i died\n", time, philo->id);
 	else
 		error_exit("Error when printing status");
+	safe_mutex_handle(&philo->table->print_status_mtx, UNLOCK);
 }

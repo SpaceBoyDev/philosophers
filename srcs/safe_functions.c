@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 21:31:09 by dario             #+#    #+#             */
-/*   Updated: 2025/05/22 18:48:34 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/27 18:38:44 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	safe_usleep(t_philo *philo, size_t time_to_usleep)
 	wake_up = get_current_time() + time_to_usleep;
 	while (get_current_time() < wake_up)
 	{
-		if (has_sim_ended(philo->table))
+		if (sim_continues(philo->table))
 			break ;
 		usleep(50);
 	}
