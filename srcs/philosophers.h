@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:38:42 by dario             #+#    #+#             */
-/*   Updated: 2025/05/27 19:14:36 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/27 20:36:39 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,15 @@
 # define BLUE	"\033[1;34m"
 # define GREEN	"\033[1;32m"
 # define YELLOW	"\033[1;33m"
+
+# define BG_RST    "\033[0m"
+# define BG_RED    "\033[41m"
+# define BG_GREEN  "\033[42m"
+# define BG_YELLOW "\033[43m"
+# define BG_BLUE   "\033[44m"
+# define BG_MAGENTA "\033[45m"
+# define BG_CYAN   "\033[46m"
+# define BG_WHITE  "\033[47m"
 
 # define PHILO_MAX 200
 
@@ -71,7 +80,6 @@ typedef struct s_philo
 	bool		dead;
 	long		start_time;
 	long		last_meal_time;
-	t_mtx		last_meal_mtx;
 	t_fork		*l_fork;
 	t_fork		*r_fork;
 	pthread_t	thread_id;
@@ -92,6 +100,7 @@ typedef struct s_table
 	int		satisfied;
 	t_mtx	satisfied_mtx;
 	t_mtx	print_status_mtx;
+	t_mtx	last_meal_mtx;
 	t_fork	*forks;
 	t_philo	*philos;
 }				t_table;
@@ -117,10 +126,10 @@ void	safe_usleep(t_philo *philo, size_t time_to_usleep);
 
 // Utils
 long	ft_atol(const char *str);
-long	get_current_time(void);
+long	get_time(void);
 
 // Monitor Utils
-bool	anyone_died(t_philo *philo);
+bool	anyone_died(t_table *table);
 bool	sim_continues(t_table *table);
 
 // Print Status
@@ -136,5 +145,6 @@ void	error_exit(const char *error_message);
 void	print_table(t_table *table);
 void	print_philos(t_table *table);
 void	print_forks(t_table *table);
+void	print_result(t_table *table);
 
 #endif

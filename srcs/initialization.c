@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:29:22 by dario             #+#    #+#             */
-/*   Updated: 2025/05/27 19:14:51 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/27 20:33:42 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	init_table(char **args, t_table *table, t_philo *philos, t_fork *forks)
 	safe_mutex_handle(&table->end_sim_mtx, INIT);
 	safe_mutex_handle(&table->sim_start_mtx, INIT);
 	safe_mutex_handle(&table->print_status_mtx, INIT);
+	safe_mutex_handle(&table->last_meal_mtx, INIT);
 	table->philos = philos;
 	table->forks = forks;
 	table->end_sim = false;
@@ -82,7 +83,6 @@ void	init_data(t_table *table)
 		table->philos[i].r_fork = &table->forks[i];
 		table->philos[i].l_fork = &table->forks[(i + 1) \
 			% table->philo_num];
-		safe_mutex_handle(&table->philos[i].last_meal_mtx, INIT);
 	}
 }
 
@@ -100,8 +100,8 @@ void	create_threads(t_table *table)
 		safe_thread_handle(&philo[i].thread_id,
 			&philo_routine, (void *)&philo[i], CREATE);
 	}
-	philo->table->sim_start = get_current_time();
+	philo->table->sim_start = get_time();
 	safe_mutex_handle(&table->sim_start_mtx, UNLOCK);
-	// if (philo->table->philo_num > 1)
-	// 	anyone_died(philo); //TODO: Implement func
+	if (philo->table->philo_num > 1)
+	 	anyone_died(philo);
 }

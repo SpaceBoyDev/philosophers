@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 00:07:14 by dario             #+#    #+#             */
-/*   Updated: 2025/05/22 19:22:34 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/27 20:15:17 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,25 @@ void	print_table(t_table *table)
 	printf("║ meals_num     ║  %ld\t\t║\n", table->meals_num);
 	printf("║ sim_start     ║  %ld║\n", table->sim_start);
 	printf("╚═══════════════╩═══════════════╝\n");
+}
+
+void	print_result(t_table *table)
+{
+	int i;
+	t_philo *philo = table->philos;
+
+	printf("╔═══════╦════════╦══════════════╦═══════════════════╗\n");
+	printf("║  ID   ║ Estado ║ Meals Count  ║  Last Meal Time   ║\n");
+	printf("╠═══════╬════════╬══════════════╬═══════════════════╣\n");
+	for (i = 0; i < table->philo_num; i++)
+	{
+		printf("║ %5d ║ %6s ║ %12ld ║ %17ld ║\n",
+			philo[i].id,
+			philo[i].dead ? "muerto" : "vivo",
+			philo[i].meals_counter,
+			philo[i].last_meal_time);
+	}
+	printf("╚═══════╩════════╩══════════════╩═══════════════════╝\n");
 }
 
 void	print_philos(t_table *table)

@@ -6,7 +6,7 @@
 #    By: dario <dario@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/01 18:40:53 by dario             #+#    #+#              #
-#    Updated: 2025/05/27 18:22:17 by dario            ###   ########.fr        #
+#    Updated: 2025/05/27 20:16:22 by dario            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ CIAN		=	\e[7;36m
 all: $(NAME)
 
 leaks: all clean
-	valgrind --leak-check=full --track-origins=yes ./philo 5 800 200 20 5
+	valgrind --leak-check=full --track-origins=yes ./philo 5 800 200 20
 
 run: all clean
 	./philo 8 800 200 20 5

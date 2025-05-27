@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:30:48 by dario             #+#    #+#             */
-/*   Updated: 2025/05/27 19:00:35 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/27 20:26:13 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	eat_routine(t_philo *philo)
 	print_status(philo, TAKEN);
 	safe_mutex_handle(&philo->r_fork->fork, LOCK);
 	print_status(philo, TAKEN);
-	safe_mutex_handle(&philo->last_meal_mtx, LOCK);
-	philo->last_meal_time = get_current_time();
-	safe_mutex_handle(&philo->last_meal_mtx, UNLOCK);
+	safe_mutex_handle(&philo->table->last_meal_mtx, LOCK);
+	philo->last_meal_time = get_time();
+	safe_mutex_handle(&philo->table->last_meal_mtx, UNLOCK);
 	if (sim_continues(philo->table))
 		++philo->meals_counter;
 	print_status(philo, EATING);
@@ -40,7 +40,6 @@ void	*philo_routine(void *param)
 {
 	t_philo	*philo;
 
-	printf("wakala\n");
 	philo = (t_philo *)param;
 	safe_mutex_handle(&philo->table->sim_start_mtx, LOCK);
 	philo->start_time = philo->table->sim_start;

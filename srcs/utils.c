@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:44:46 by dario             #+#    #+#             */
-/*   Updated: 2025/05/20 19:37:47 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/27 20:26:13 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ long	ft_atol(const char *str)
 	return (num * negative);
 }
 
-long	get_current_time(void)
+long	get_time(void)
 {
 	struct timeval	time;
 
