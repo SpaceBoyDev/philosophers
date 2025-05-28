@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:38:42 by dario             #+#    #+#             */
-/*   Updated: 2025/05/27 20:36:39 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/29 00:10:54 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,11 @@
 typedef pthread_mutex_t	t_mtx;
 typedef struct s_table	t_table;
 
-typedef enum e_philo_status
-{
-	TAKEN,
-	EATING,
-	SLEEPING,
-	THINKING,
-	DEAD
-}			t_philo_status;
+# define MSG_TAKEN BG_BLUE"has taken a fork" 
+# define MSG_EATING BG_GREEN"is eating" 
+# define MSG_SLEEPING BG_MAGENTA"is sleeping" 
+# define MSG_THINKING BG_CYAN"is thinking" 
+# define MSG_DEAD BG_RED"died"
 
 typedef enum e_mtxop
 {
@@ -126,14 +123,14 @@ void	safe_usleep(t_philo *philo, size_t time_to_usleep);
 
 // Utils
 long	ft_atol(const char *str);
-long	get_time(void);
+size_t	get_time(void);
 
 // Monitor Utils
 bool	anyone_died(t_table *table);
 bool	sim_continues(t_table *table);
 
 // Print Status
-void	print_status(t_philo *philo, t_philo_status status);
+void	print_status(t_philo *philo, char *msg_status);
 
 // Free Variables
 void	join_threads(t_table *table);

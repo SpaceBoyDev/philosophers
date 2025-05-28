@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 21:31:09 by dario             #+#    #+#             */
-/*   Updated: 2025/05/27 20:26:13 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/28 21:53:21 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void	*safe_malloc(size_t bytes)
 
 void	safe_usleep(t_philo *philo, size_t time_to_usleep)
 {
-	int	wake_up;
+	size_t	wake_up;
 
 	wake_up = get_time() + time_to_usleep;
 	while (get_time() < wake_up)
 	{
-		if (sim_continues(philo->table))
+		if (!sim_continues(philo->table))
 			break ;
 		usleep(50);
 	}

@@ -6,7 +6,7 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/philo",
-			"args": ["5", "70", "70", "70"],
+			"args": ["5", "800", "400", "200"],
 			"cwd": "${workspaceFolder}"
 		}
 	],
