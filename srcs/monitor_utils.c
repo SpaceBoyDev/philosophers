@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 19:38:23 by dario             #+#    #+#             */
-/*   Updated: 2025/05/28 21:53:12 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/29 16:04:37 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ bool	anyone_died(t_table *table)
 		while (++i < table->philo_num)
 		{
 			safe_mutex_handle(&table->last_meal_mtx, LOCK);
-			if (((long)get_time() - philo[i].last_meal_time) > table->time_to_die)
+			if ((get_time() - philo[i].last_meal_time) > table->time_to_die)
 			{
 				print_status(&philo[i], MSG_DEAD);
 				end_sim(table);

@@ -6,13 +6,13 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:29:22 by dario             #+#    #+#             */
-/*   Updated: 2025/05/29 00:08:36 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/29 16:24:43 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-/* ./philo 10 			15			 10				20			30
+/* ./philo 10 			150			 100			200			30
 * philo_num^ time_to_die^ time_to_eat^ time_to_sleep^ meals_num^
 * philo_num: número de philos
 * time_to_die (ms): tiempo que debe pasar entre la última comida y que el
@@ -54,9 +54,9 @@ void	init_table(char **args, t_table *table, t_philo *philos, t_fork *forks)
 	table->forks = forks;
 	table->end_sim = false;
 	table->philo_num = ft_atol(args[1]);
-	table->time_to_die = ft_atol(args[2]) * 1000;
-	table->time_to_eat = ft_atol(args[3]) * 1000;
-	table->time_to_sleep = ft_atol(args[4]) * 1000;
+	table->time_to_die = ft_atol(args[2]);
+	table->time_to_eat = ft_atol(args[3]);
+	table->time_to_sleep = ft_atol(args[4]);
 	if (args[5])
 		table->meals_num = ft_atol(args[5]);
 	else

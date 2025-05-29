@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:38:42 by dario             #+#    #+#             */
-/*   Updated: 2025/05/29 00:10:54 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/29 16:19:24 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,12 @@
 typedef pthread_mutex_t	t_mtx;
 typedef struct s_table	t_table;
 
-# define MSG_TAKEN BG_BLUE"has taken a fork" 
-# define MSG_EATING BG_GREEN"is eating" 
-# define MSG_SLEEPING BG_MAGENTA"is sleeping" 
-# define MSG_THINKING BG_CYAN"is thinking" 
+# define MSG_TAKENL BG_BLUE"has taken a fork"
+# define MSG_TAKENR BG_CYAN"has taken a fork"
+
+# define MSG_EATING BG_GREEN"is eating"
+# define MSG_SLEEPING BG_MAGENTA"is sleeping"
+# define MSG_THINKING BG_YELLOW"is thinking"
 # define MSG_DEAD BG_RED"died"
 
 typedef enum e_mtxop
@@ -86,9 +88,9 @@ typedef struct s_philo
 typedef struct s_table
 {
 	long	philo_num;
-	long	time_to_die;
-	long	time_to_eat;
-	long	time_to_sleep;
+	size_t	time_to_die;
+	size_t	time_to_eat;
+	size_t	time_to_sleep;
 	long	meals_num;
 	long	sim_start;
 	t_mtx	sim_start_mtx;

@@ -6,14 +6,14 @@
 #    By: dario <dario@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/01 18:40:53 by dario             #+#    #+#              #
-#    Updated: 2025/05/27 20:45:55 by dario            ###   ########.fr        #
+#    Updated: 2025/05/29 16:17:39 by dario            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	philo
 
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -g3 #-Werror
+CFLAGS		=	-Wall -Wextra #-g3 #-Werror
 RM			=	rm -f
 
 DIR			=	srcs/
@@ -39,7 +39,7 @@ leaks: all clean
 	valgrind --leak-check=full --track-origins=yes ./philo 5 800 200 20
 
 run: all clean
-	./philo 8 800 200 200 5
+	./philo 3 800 200 200 3
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
