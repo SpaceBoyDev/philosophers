@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:38:42 by dario             #+#    #+#             */
-/*   Updated: 2025/05/29 16:19:24 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/30 01:44:40 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct s_table	t_table;
 
 # define MSG_TAKENL BG_BLUE"has taken a fork"
 # define MSG_TAKENR BG_CYAN"has taken a fork"
-
 # define MSG_EATING BG_GREEN"is eating"
 # define MSG_SLEEPING BG_MAGENTA"is sleeping"
 # define MSG_THINKING BG_YELLOW"is thinking"
@@ -98,6 +97,8 @@ typedef struct s_table
 	t_mtx	end_sim_mtx;
 	int		satisfied;
 	t_mtx	satisfied_mtx;
+	int		philos_ready;
+	t_mtx	philos_ready_mtx;
 	t_mtx	print_status_mtx;
 	t_mtx	last_meal_mtx;
 	t_fork	*forks;

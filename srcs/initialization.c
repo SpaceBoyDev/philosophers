@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:29:22 by dario             #+#    #+#             */
-/*   Updated: 2025/05/29 16:24:43 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/30 01:41:08 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	init_table(char **args, t_table *table, t_philo *philos, t_fork *forks)
 	safe_mutex_handle(&table->sim_start_mtx, INIT);
 	safe_mutex_handle(&table->print_status_mtx, INIT);
 	safe_mutex_handle(&table->last_meal_mtx, INIT);
+	safe_mutex_handle(&table->philos_ready_mtx, INIT);
 	table->philos = philos;
 	table->forks = forks;
 	table->end_sim = false;
@@ -66,7 +67,7 @@ void	init_table(char **args, t_table *table, t_philo *philos, t_fork *forks)
 void	init_data(t_table *table)
 {
 	int	i;
-	
+
 	i = -1;
 	while (++i < table->philo_num)
 	{
@@ -89,7 +90,7 @@ void	init_data(t_table *table)
 void	create_threads(t_table *table)
 {
 	int		i;
-	t_philo *philo;
+	t_philo	*philo;
 
 	printf(BLUE"Creating threads...\n"RST);
 	philo = table->philos;
@@ -103,5 +104,6 @@ void	create_threads(t_table *table)
 	philo->table->sim_start = get_time();
 	safe_mutex_handle(&table->sim_start_mtx, UNLOCK);
 	if (philo->table->philo_num > 1)
-	 	anyone_died(table);
+		anyone_died(table);
+	printf("Ha muerto alguien o ha terminado todo :3\n");
 }

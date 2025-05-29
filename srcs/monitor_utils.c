@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 19:38:23 by dario             #+#    #+#             */
-/*   Updated: 2025/05/29 16:04:37 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/29 23:58:18 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ bool	anyone_died(t_table *table)
 {
 	int		i;
 	t_philo	*philo;
-	usleep(5000);
+
+	while (table->philos_ready != table->philo_num)
+		usleep(1);
 	philo = table->philos;
 	while (1)
 	{
@@ -48,6 +50,7 @@ bool	anyone_died(t_table *table)
 bool	sim_continues(t_table *table)
 {
 	bool	ret;
+
 	safe_mutex_handle(&table->end_sim_mtx, LOCK);
 	ret = table->end_sim;
 	safe_mutex_handle(&table->end_sim_mtx, UNLOCK);

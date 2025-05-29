@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:44:46 by dario             #+#    #+#             */
-/*   Updated: 2025/05/28 21:46:52 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/30 01:41:16 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,3 @@ size_t	get_time(void)
 		error_exit("Error getting current time");
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
-
-
