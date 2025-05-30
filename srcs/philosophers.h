@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:38:42 by dario             #+#    #+#             */
-/*   Updated: 2025/05/30 19:07:34 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/30 19:26:29 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,24 +119,17 @@ void	*philo_routine(void *param);
 void	safe_mutex_handle(t_mtx *mutex, t_mtxop opcode);
 void	safe_thread_handle(pthread_t *thread, void *(func)(void *),
 			void *data, t_threadop opcode);
-
-// Safe Functions
-void	*safe_malloc(size_t bytes);
 void	safe_usleep(t_philo *philo, size_t time_to_usleep);
 
 // Utils
 long	ft_atol(const char *str);
 size_t	get_time(void);
+void	join_threads(t_table *table);
 
 // Monitor Utils
 bool	anyone_died(t_table *table);
 bool	sim_continues(t_table *table);
-
-// Print Status
 void	print_status(t_philo *philo, char *msg_status);
-
-// Free Variables
-void	join_threads(t_table *table);
 
 // Handle Errors
 void	error_exit(const char *error_message);

@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 18:30:05 by dario             #+#    #+#             */
-/*   Updated: 2025/05/29 17:01:54 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/30 19:22:35 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	main(int argc, char **argv)
 	check_args(argv);
 	init_table(argv, &table, philos, forks);
 	init_data(&table);
+	print_forks(&table);
 	create_threads(&table);
 	join_threads(&table);
 	//print_result(&table);
@@ -46,7 +47,6 @@ int	main(int argc, char **argv)
 	usleep(500000);
 	print_table(&table);
 	print_philos(&table);
-	print_forks(&table);
 	*/
 	return (0);
 }
