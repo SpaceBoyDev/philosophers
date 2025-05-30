@@ -6,13 +6,13 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 19:38:23 by dario             #+#    #+#             */
-/*   Updated: 2025/05/30 19:12:25 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/30 19:28:30 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	end_sim(t_table *table)
+static void	end_sim(t_table *table)
 {
 	safe_mutex_handle(&table->end_sim_mtx, LOCK);
 	table->end_sim = true;
