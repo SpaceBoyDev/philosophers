@@ -6,46 +6,54 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:30:48 by dario             #+#    #+#             */
-/*   Updated: 2025/05/30 01:33:53 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/30 19:16:16 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	sleep_think_routine(t_philo *philo)
+static void	sleep_think_routine(t_philo *philo)
 {
 	print_status(philo, MSG_SLEEPING);
 	safe_usleep(philo, philo->table->time_to_sleep);
 	print_status(philo, MSG_THINKING);
 }
 
-void	eat_routine(t_philo *philo)
+static void	eat_routine(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 	{
 		safe_mutex_handle(&philo->l_fork->fork, LOCK);
-		print_status(philo, MSG_TAKENL);
+		print_status(philo, MSG_TAKEN_L);
 		safe_mutex_handle(&philo->r_fork->fork, LOCK);
-		print_status(philo, MSG_TAKENR);
+		print_status(philo, MSG_TAKEN_R);
 	}
 	else
 	{
 		safe_mutex_handle(&philo->r_fork->fork, LOCK);
-		print_status(philo, MSG_TAKENR);
+		print_status(philo, MSG_TAKEN_R);
 		safe_mutex_handle(&philo->l_fork->fork, LOCK);
-		print_status(philo, MSG_TAKENL);
+		print_status(philo, MSG_TAKEN_L);
 	}
 	safe_mutex_handle(&philo->table->last_meal_mtx, LOCK);
 	philo->last_meal_time = get_time();
 	if (sim_continues(philo->table))
-	{
 		++philo->meals_counter;
-	}
 	safe_mutex_handle(&philo->table->last_meal_mtx, UNLOCK);
 	print_status(philo, MSG_EATING);
 	safe_usleep(philo, philo->table->time_to_eat);
 	safe_mutex_handle(&philo->r_fork->fork, UNLOCK);
 	safe_mutex_handle(&philo->l_fork->fork, UNLOCK);
+}
+
+static void	*lonely_philo(t_philo *philo)
+{
+	safe_mutex_handle(&philo->l_fork->fork, LOCK);
+	print_status(philo, MSG_TAKEN_L);
+	safe_usleep(philo, philo->table->time_to_die);
+	print_status(philo, MSG_DIED);
+	safe_mutex_handle(&philo->l_fork->fork, UNLOCK);
+	return (NULL);
 }
 
 void	*philo_routine(void *param)
@@ -57,6 +65,8 @@ void	*philo_routine(void *param)
 	philo->start_time = philo->table->sim_start;
 	philo->last_meal_time = philo->start_time;
 	safe_mutex_handle(&philo->table->sim_start_mtx, UNLOCK);
+	if (philo->table->philo_num == 1)
+		lonely_philo(philo);
 	if (philo->id % 2 != 0)
 		safe_usleep(philo, 100);
 	safe_mutex_handle(&philo->table->philos_ready_mtx, LOCK);

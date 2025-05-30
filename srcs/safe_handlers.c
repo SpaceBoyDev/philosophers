@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 21:29:57 by dario             #+#    #+#             */
-/*   Updated: 2025/05/20 21:30:47 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/30 19:13:10 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,17 @@ void	safe_thread_handle(pthread_t *thread, void *(func)(void *),
 		handle_thread_error(pthread_detach(*thread), opcode);
 	else
 		error_exit("Bad opcode for thread");
+}
+
+void	safe_usleep(t_philo *philo, size_t time_to_usleep)
+{
+	size_t	wake_up;
+
+	wake_up = get_time() + time_to_usleep;
+	while (get_time() < wake_up)
+	{
+		if (!sim_continues(philo->table))
+			break ;
+		usleep(500);
+	}
 }

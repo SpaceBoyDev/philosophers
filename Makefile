@@ -6,21 +6,20 @@
 #    By: dario <dario@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/01 18:40:53 by dario             #+#    #+#              #
-#    Updated: 2025/05/29 17:12:32 by dario            ###   ########.fr        #
+#    Updated: 2025/05/30 19:16:02 by dario            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	philo
 
 CC			=	cc
-CFLAGS		=	-Wall -Wextra #-g3 #-Werror
+CFLAGS		=	-Wall -Wextra -g3 #-Werror
 RM			=	rm -f
 
 DIR			=	srcs/
 HDERS		=	$(DIR)philosophers.h
-SRC			=	main.c initialization.c philo_routines.c monitor_utils.c\
-				utils.c safe_handlers.c safe_functions.c print_status.c \
-				free_variables.c handle_errors.c \
+SRC			=	main.c initialization.c philo_routines.c monitor_utils.c \
+				utils.c safe_handlers.c handle_errors.c \
 				debug.c
 
 SRCS		=	$(addprefix $(DIR), $(SRC))
