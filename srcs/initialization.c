@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:29:22 by dario             #+#    #+#             */
-/*   Updated: 2025/05/31 20:18:34 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/31 20:25:01 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,15 @@ void	init_table(char **args, t_table *table, t_philo *philos, t_fork *forks)
 	safe_mutex_handle(&table->print_status_mtx, INIT);
 	safe_mutex_handle(&table->last_meal_mtx, INIT);
 	safe_mutex_handle(&table->philos_ready_mtx, INIT);
-	table->philos = philos;
-	table->forks = forks;
-	table->end_sim = false;
-	table->satisfied = 0;
 	table->philo_num = ft_atol(args[1]);
 	table->time_to_die = ft_atol(args[2]);
 	table->time_to_eat = ft_atol(args[3]);
 	table->time_to_sleep = ft_atol(args[4]);
+	table->philos = philos;
+	table->forks = forks;
+	table->end_sim = false;
+	table->satisfied = 0;
+	table->philos_ready = 0;
 	if (args[5])
 		table->meals_num = ft_atol(args[5]);
 	else
