@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:30:48 by dario             #+#    #+#             */
-/*   Updated: 2025/05/30 19:23:18 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/31 18:53:51 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,24 @@ static void	sleep_think_routine(t_philo *philo)
 
 static void	eat_routine(t_philo *philo)
 {
-	if (philo->id % 2 == 0)
-	{
-		safe_mutex_handle(&philo->l_fork->fork, LOCK);
-		print_status(philo, MSG_TAKEN_L);
-		safe_mutex_handle(&philo->r_fork->fork, LOCK);
-		print_status(philo, MSG_TAKEN_R);
-	}
-	else
-	{
-		safe_mutex_handle(&philo->r_fork->fork, LOCK);
-		print_status(philo, MSG_TAKEN_R);
-		safe_mutex_handle(&philo->l_fork->fork, LOCK);
-		print_status(philo, MSG_TAKEN_L);
-	}
+	safe_mutex_handle(&philo->l_fork->fork, LOCK);
+	print_status(philo, MSG_TAKEN_L);
+	safe_mutex_handle(&philo->r_fork->fork, LOCK);
+	print_status(philo, MSG_TAKEN_R);
+	// if (philo->id % 2 == 0)
+	// {
+	// 	safe_mutex_handle(&philo->l_fork->fork, LOCK);
+	// 	print_status(philo, MSG_TAKEN_L);
+	// 	safe_mutex_handle(&philo->r_fork->fork, LOCK);
+	// 	print_status(philo, MSG_TAKEN_R);
+	// }
+	// else
+	// {
+	// 	safe_mutex_handle(&philo->r_fork->fork, LOCK);
+	// 	print_status(philo, MSG_TAKEN_R);
+	// 	safe_mutex_handle(&philo->l_fork->fork, LOCK);
+	// 	print_status(philo, MSG_TAKEN_L);
+	// }
 	safe_mutex_handle(&philo->table->last_meal_mtx, LOCK);
 	philo->last_meal_time = get_time();
 	if (sim_continues(philo->table))
