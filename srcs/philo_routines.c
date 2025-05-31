@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:30:48 by dario             #+#    #+#             */
-/*   Updated: 2025/05/31 19:53:19 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/31 20:15:57 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	*philo_routine(void *param)
 	philo = (t_philo *)param;
 	safe_mutex_handle(&philo->table->sim_start_mtx, LOCK);
 	philo->start_time = philo->table->sim_start;
-	philo->last_meal_time = philo->start_time;
+	philo->last_meal_time = philo->table->sim_start;
 	safe_mutex_handle(&philo->table->sim_start_mtx, UNLOCK);
 	if (philo->id % 2 == 0)
 	safe_usleep(philo, 100);
