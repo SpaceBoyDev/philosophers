@@ -6,14 +6,14 @@
 #    By: dario <dario@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/01 18:40:53 by dario             #+#    #+#              #
-#    Updated: 2025/05/30 19:16:02 by dario            ###   ########.fr        #
+#    Updated: 2025/05/31 19:19:11 by dario            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	philo
 
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -g3 #-Werror
+CFLAGS		=	-Wall -Wextra -Werror -lpthread -O3 #-g3
 RM			=	rm -f
 
 DIR			=	srcs/
