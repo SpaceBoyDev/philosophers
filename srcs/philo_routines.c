@@ -6,11 +6,21 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:30:48 by dario             #+#    #+#             */
-/*   Updated: 2025/05/31 19:35:04 by dario            ###   ########.fr       */
+/*   Updated: 2025/05/31 19:53:19 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+static void	*lonely_philo(t_philo *philo)
+{
+	safe_mutex_handle(&philo->l_fork->fork, LOCK);
+	print_status(philo, MSG_TAKEN_L);
+	safe_usleep(philo, philo->table->time_to_die);
+	print_status(philo, MSG_DIED);
+	safe_mutex_handle(&philo->l_fork->fork, UNLOCK);
+	return (NULL);
+}
 
 static void	sleep_think_routine(t_philo *philo)
 {
@@ -25,20 +35,6 @@ static void	eat_routine(t_philo *philo)
 	print_status(philo, MSG_TAKEN_L);
 	safe_mutex_handle(&philo->r_fork->fork, LOCK);
 	print_status(philo, MSG_TAKEN_R);
-	// if (philo->id % 2 == 0)
-	// {
-	// 	safe_mutex_handle(&philo->l_fork->fork, LOCK);
-	// 	print_status(philo, MSG_TAKEN_L);
-	// 	safe_mutex_handle(&philo->r_fork->fork, LOCK);
-	// 	print_status(philo, MSG_TAKEN_R);
-	// }
-	// else
-	// {
-	// 	safe_mutex_handle(&philo->r_fork->fork, LOCK);
-	// 	print_status(philo, MSG_TAKEN_R);
-	// 	safe_mutex_handle(&philo->l_fork->fork, LOCK);
-	// 	print_status(philo, MSG_TAKEN_L);
-	// }
 	safe_mutex_handle(&philo->table->last_meal_mtx, LOCK);
 	philo->last_meal_time = get_time();
 	if (sim_continues(philo->table))
@@ -48,16 +44,6 @@ static void	eat_routine(t_philo *philo)
 	safe_usleep(philo, philo->table->time_to_eat);
 	safe_mutex_handle(&philo->r_fork->fork, UNLOCK);
 	safe_mutex_handle(&philo->l_fork->fork, UNLOCK);
-}
-
-static void	*lonely_philo(t_philo *philo)
-{
-	safe_mutex_handle(&philo->l_fork->fork, LOCK);
-	print_status(philo, MSG_TAKEN_L);
-	safe_usleep(philo, philo->table->time_to_die);
-	print_status(philo, MSG_DIED);
-	safe_mutex_handle(&philo->l_fork->fork, UNLOCK);
-	return (NULL);
 }
 
 void	*philo_routine(void *param)
@@ -85,8 +71,6 @@ void	*philo_routine(void *param)
 			safe_mutex_handle(&philo->table->satisfied_mtx, LOCK);
 			++philo->table->satisfied;
 			safe_mutex_handle(&philo->table->satisfied_mtx, UNLOCK);
-			safe_mutex_handle(&philo->l_fork->fork, UNLOCK);
-			safe_mutex_handle(&philo->r_fork->fork, UNLOCK);
 			return (NULL);
 		}
 		sleep_think_routine(philo);
