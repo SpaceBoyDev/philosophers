@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:38:42 by dario             #+#    #+#             */
-/*   Updated: 2025/06/01 21:39:53 by dario            ###   ########.fr       */
+/*   Updated: 2025/06/01 21:51:33 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,5 +139,6 @@ void	print_table(t_table *table);
 void	print_philos(t_table *table);
 void	print_forks(t_table *table);
 void	print_result(t_table *table);
+void	try_forks(t_table *table);
 
 #endif

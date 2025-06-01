@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 00:07:14 by dario             #+#    #+#             */
-/*   Updated: 2025/05/29 00:10:40 by dario            ###   ########.fr       */
+/*   Updated: 2025/06/01 21:53:12 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,23 @@ void	print_forks(t_table *table)
 		printf("║\t%i\t║\n", fork->fork_id);
 	}
 	printf("╚═══════════════╝\n");
+}
+
+void	try_forks(t_table *table)
+{
+	int	i;
+
+	i = -1;
+	while (++i < table->philo_num)
+	{
+		int status = pthread_mutex_trylock(&table->forks[i].fork);
+		if (status == 0) {
+			printf("Fork %i estaba unlocked (ahora lo tienes locked temporalmente)\n", i);
+			pthread_mutex_unlock(&table->forks[i].fork); // Devuelve el mutex a su estado original
+		} else if (status == EBUSY) {
+			printf("Mutex %i está locked por otro thread\n", i);
+		} else {
+			printf("Error al intentar trylock en fork %i\n", i);
+		}
+	}
 }
