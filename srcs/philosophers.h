@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:38:42 by dario             #+#    #+#             */
-/*   Updated: 2025/05/30 19:26:29 by dario            ###   ########.fr       */
+/*   Updated: 2025/06/01 21:39:53 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,17 @@
 # define BG_CYAN   "\033[46m"
 # define BG_WHITE  "\033[47m"
 
+# define MSG_TAKEN_L "has taken a fork"
+# define MSG_TAKEN_R "has taken a fork"
+# define MSG_EATING "is eating"
+# define MSG_SLEEPING "is sleeping"
+# define MSG_THINKING "is thinking"
+# define MSG_DIED "died"
+
 # define PHILO_MAX 200
 
 typedef pthread_mutex_t	t_mtx;
 typedef struct s_table	t_table;
-
-# define MSG_TAKEN_L BG_BLUE"has taken a fork"
-# define MSG_TAKEN_R BG_CYAN"has taken a fork"
-# define MSG_EATING BG_GREEN"is eating"
-# define MSG_SLEEPING BG_MAGENTA"is sleeping"
-# define MSG_THINKING BG_YELLOW"is thinking"
-# define MSG_DIED BG_RED"died"
 
 typedef enum e_mtxop
 {
@@ -129,7 +129,7 @@ void	join_threads(t_table *table);
 // Monitor Utils
 bool	anyone_died(t_table *table);
 bool	sim_continues(t_table *table);
-void	print_status(t_philo *philo, char *msg_status);
+void	print_status(t_philo *philo, char *msg_status, char *bg_color);
 
 // Handle Errors
 void	error_exit(const char *error_message);

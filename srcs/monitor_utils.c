@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 19:38:23 by dario             #+#    #+#             */
-/*   Updated: 2025/05/31 20:06:30 by dario            ###   ########.fr       */
+/*   Updated: 2025/06/01 21:37:40 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ bool	anyone_died(t_table *table)
 			safe_mutex_handle(&table->last_meal_mtx, LOCK);
 			if ((get_time() - philo[i].last_meal_time) > table->time_to_die)
 			{
-				print_status(&philo[i], MSG_DIED);
+				print_status(&philo[i], MSG_DIED, BG_RED);
 				end_sim(table);
 				safe_mutex_handle(&table->last_meal_mtx, UNLOCK);
 				return (true);
@@ -58,7 +58,7 @@ bool	sim_continues(t_table *table)
 	return (!ret);
 }
 
-void	print_status(t_philo *philo, char *msg_status)
+void	print_status(t_philo *philo, char *msg_status, char *bg_color)
 {
 	size_t	time;
 
@@ -69,6 +69,6 @@ void	print_status(t_philo *philo, char *msg_status)
 		safe_mutex_handle(&philo->table->print_status_mtx, UNLOCK);
 		return ;
 	}
-	printf("%li %i %s"BG_RST"\n", time, philo->id, msg_status);
+	printf("%s%li %i %s"BG_RST"\n", bg_color, time, philo->id, msg_status);
 	safe_mutex_handle(&philo->table->print_status_mtx, UNLOCK);
 }

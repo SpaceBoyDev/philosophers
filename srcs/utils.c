@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:44:46 by dario             #+#    #+#             */
-/*   Updated: 2025/05/31 20:19:05 by dario            ###   ########.fr       */
+/*   Updated: 2025/06/01 21:19:02 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ size_t	get_time(void)
 void	join_threads(t_table *table)
 {
 	int	i;
+
 	i = -1;
 	while (++i < table->philo_num)
 	{
