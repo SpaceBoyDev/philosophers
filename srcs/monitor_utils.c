@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 19:38:23 by dario             #+#    #+#             */
-/*   Updated: 2025/06/03 12:02:43 by dario            ###   ########.fr       */
+/*   Updated: 2025/06/03 12:03:42 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	end_sim(t_table *table)
 static bool	all_philos_ready(t_table *table)
 {
 	int	ret;
+
 	safe_mutex_handle(&table->philos_ready_mtx, LOCK);
 	ret = table->philos_ready;
 	safe_mutex_handle(&table->philos_ready_mtx, UNLOCK);
