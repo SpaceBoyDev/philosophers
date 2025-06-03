@@ -6,7 +6,7 @@
 #    By: dario <dario@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/01 18:40:53 by dario             #+#    #+#              #
-#    Updated: 2025/05/31 20:03:25 by dario            ###   ########.fr        #
+#    Updated: 2025/06/03 12:18:11 by dario            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ NAME		=	philo
 CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror -lpthread -O3 #-g3
 RM			=	rm -f
+
+VALFLAGS	=	--tool=helgrind --tool=drd
 
 DIR			=	srcs/
 HDERS		=	$(DIR)philosophers.h
@@ -35,10 +37,23 @@ CIAN		=	\e[7;36m
 all: $(NAME)
 
 leaks: all clean
-	valgrind --leak-check=full --track-origins=yes ./philo 5 1500 200 200 3
+	valgrind $(VALFLAGS) ./philo 5 1500 200 200 3
+	valgrind $(VALFLAGS) ./philo 5 800 200 200
+	valgrind $(VALFLAGS) ./philo 5 800 200 200 7
+	valgrind $(VALFLAGS) ./philo 4 410 200 200
+	valgrind $(VALFLAGS) ./philo 4 310 200 200
 
+# Si el último valor es 20 significa que se supone que debe ser infinito,
+# pero si aquí es infinito, el makefile no avanza
 run: all clean
 	./philo 3 800 200 200 3
+	./philo 5 1500 200 200 3
+	./philo 5 800 200 200 20 
+	./philo 5 800 200 200 7
+	./philo 4 410 200 200 20
+	./philo 4 310 200 200 20
+
+
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
