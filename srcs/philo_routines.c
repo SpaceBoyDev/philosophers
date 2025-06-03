@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:30:48 by dario             #+#    #+#             */
-/*   Updated: 2025/06/01 21:41:55 by dario            ###   ########.fr       */
+/*   Updated: 2025/06/03 10:36:20 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,17 @@ void	*philo_routine(void *param)
 
 	philo = (t_philo *)param;
 	safe_mutex_handle(&philo->table->sim_start_mtx, LOCK);
+	safe_mutex_handle(&philo->table->sim_start_mtx, UNLOCK);
+	safe_mutex_handle(&philo->table->philos_ready_mtx, LOCK);
+	safe_mutex_handle(&philo->table->last_meal_mtx, LOCK);
 	philo->start_time = philo->table->sim_start;
 	philo->last_meal_time = philo->table->sim_start;
-	safe_mutex_handle(&philo->table->sim_start_mtx, UNLOCK);
-	if (philo->id % 2 == 0)
-		safe_usleep(philo, 100);
-	safe_mutex_handle(&philo->table->philos_ready_mtx, LOCK);
 	++philo->table->philos_ready;
+	safe_mutex_handle(&philo->table->last_meal_mtx, UNLOCK);
 	safe_mutex_handle(&philo->table->philos_ready_mtx, UNLOCK);
 	if (philo->table->philo_num == 1)
 		return (lonely_philo(philo));
+	if (philo->id % 2 == 0)
+		safe_usleep(philo, 100);
 	return (philo_loop(philo));
 }

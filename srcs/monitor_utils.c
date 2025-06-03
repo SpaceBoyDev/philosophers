@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 19:38:23 by dario             #+#    #+#             */
-/*   Updated: 2025/06/01 21:37:40 by dario            ###   ########.fr       */
+/*   Updated: 2025/06/03 13:55:44 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,41 @@ static void	end_sim(t_table *table)
 	safe_mutex_handle(&table->end_sim_mtx, UNLOCK);
 }
 
+static bool	all_philos_ready(t_table *table)
+{
+	int	ret;
+	safe_mutex_handle(&table->philos_ready_mtx, LOCK);
+	ret = table->philos_ready;
+	safe_mutex_handle(&table->philos_ready_mtx, UNLOCK);
+	return (ret == table->philo_num);
+}
+
 bool	anyone_died(t_table *table)
 {
 	int		i;
-	t_philo	*philo;
 
-	while (table->philos_ready != table->philo_num)
-		usleep(1);
-	philo = table->philos;
+	while (!all_philos_ready(table))
+		usleep(50);
+	// safe_mutex_handle(&table->philos_ready_mtx, LOCK);
+	// if (table->philos_ready != table->philo_num)
+	// {
+	// 	safe_mutex_handle(&table->philos_ready_mtx, UNLOCK);
+	// 	return (anyone_died(table));
+	// }
+	// safe_mutex_handle(&table->philos_ready_mtx, UNLOCK);
 	while (1)
 	{
 		i = -1;
 		while (++i < table->philo_num)
 		{
 			safe_mutex_handle(&table->last_meal_mtx, LOCK);
-			if ((get_time() - philo[i].last_meal_time) > table->time_to_die)
+			if ((get_time() - table->philos[i].last_meal_time)
+				> table->time_to_die)
 			{
-				print_status(&philo[i], MSG_DIED, BG_RED);
+				//safe_mutex_handle(&table->print_status_mtx, LOCK);
+				print_status(&table->philos[i], MSG_DIED, BG_RED);
 				end_sim(table);
+				//safe_mutex_handle(&table->print_status_mtx, UNLOCK);
 				safe_mutex_handle(&table->last_meal_mtx, UNLOCK);
 				return (true);
 			}

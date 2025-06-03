@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:38:42 by dario             #+#    #+#             */
-/*   Updated: 2025/06/01 21:51:33 by dario            ###   ########.fr       */
+/*   Updated: 2025/06/03 10:47:36 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	check_args(char **args);
 void	init_table(char **args, t_table *table,
 			t_philo *philos, t_fork *forks);
 void	init_data(t_table *table);
-void	create_threads(t_table *table);
+bool	create_threads(t_table *table);
 
 // Philo Routines
 void	*philo_routine(void *param);

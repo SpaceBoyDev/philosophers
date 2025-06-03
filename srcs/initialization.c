@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 21:29:22 by dario             #+#    #+#             */
-/*   Updated: 2025/05/31 20:25:01 by dario            ###   ########.fr       */
+/*   Updated: 2025/06/03 10:48:41 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,14 @@ void	init_data(t_table *table)
 	}
 }
 
-void	create_threads(t_table *table)
+bool	create_threads(t_table *table)
 {
 	int		i;
 	t_philo	*philo;
 
 	philo = table->philos;
-	safe_mutex_handle(&table->sim_start_mtx, LOCK);
 	i = -1;
+	safe_mutex_handle(&table->sim_start_mtx, LOCK);
 	while (++i < table->philo_num)
 	{
 		safe_thread_handle(&philo[i].thread_id,
@@ -107,4 +107,5 @@ void	create_threads(t_table *table)
 	safe_mutex_handle(&table->sim_start_mtx, UNLOCK);
 	if (philo->table->philo_num > 1)
 		anyone_died(table);
+	return (true);
 }
