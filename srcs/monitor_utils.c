@@ -6,7 +6,7 @@
 /*   By: dario <dario@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 19:38:23 by dario             #+#    #+#             */
-/*   Updated: 2025/06/03 13:55:44 by dario            ###   ########.fr       */
+/*   Updated: 2025/06/03 12:02:43 by dario            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,6 @@ bool	anyone_died(t_table *table)
 
 	while (!all_philos_ready(table))
 		usleep(50);
-	// safe_mutex_handle(&table->philos_ready_mtx, LOCK);
-	// if (table->philos_ready != table->philo_num)
-	// {
-	// 	safe_mutex_handle(&table->philos_ready_mtx, UNLOCK);
-	// 	return (anyone_died(table));
-	// }
-	// safe_mutex_handle(&table->philos_ready_mtx, UNLOCK);
 	while (1)
 	{
 		i = -1;
@@ -50,10 +43,8 @@ bool	anyone_died(t_table *table)
 			if ((get_time() - table->philos[i].last_meal_time)
 				> table->time_to_die)
 			{
-				//safe_mutex_handle(&table->print_status_mtx, LOCK);
 				print_status(&table->philos[i], MSG_DIED, BG_RED);
 				end_sim(table);
-				//safe_mutex_handle(&table->print_status_mtx, UNLOCK);
 				safe_mutex_handle(&table->last_meal_mtx, UNLOCK);
 				return (true);
 			}
